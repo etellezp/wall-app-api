@@ -16,6 +16,7 @@ class Api::V1::MessagesController < ApplicationController
         error: @message.errors.full_message
       }
       render json: resp, status: :unprocessable_entity
+    end
   end
 
   private
