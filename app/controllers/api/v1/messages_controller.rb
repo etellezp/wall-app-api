@@ -6,4 +6,22 @@ class Api::V1::MessagesController < ApplicationController
     render json: json_messages, status: :ok
   end
 
+  def create
+    @message = current_user.build(message_params)
+    if @message.save
+      json_message = MessageSerializer.new(@message).serialized_json
+      render json: json_message, status: :created
+    else
+      resp = {
+        error: @message.errors.full_message
+      }
+      render json: resp, status: :unprocessable_entity
+  end
+
+  private
+
+  def message_params
+    params.require(:message).permit(:content)
+  end
+
 end
