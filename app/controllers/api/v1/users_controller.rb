@@ -13,15 +13,16 @@ class Api::V1::UsersController < ApplicationController
       user_json = UserSerializer.new(@user).serialized_json
       render json: user_json, status: :created
     else
-      response = {
+      resp = {
         error: @user.errors.full_messages
       }
-      render json: response, status: :unprocessable_entity
+      render json: resp, status: :unprocessable_entity
+    end
   end
 
   private
 
-  def user_params
-    params.require(:user).permit(:username, :email, :password)
-  end
+    def user_params
+      params.require(:user).permit(:username, :email, :password)
+    end
 end
