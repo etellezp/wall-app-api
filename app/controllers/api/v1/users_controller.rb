@@ -6,6 +6,12 @@ class Api::V1::UsersController < ApplicationController
     render json: json_users, status: :ok
   end
 
+  def show
+    @user = User.find(params[:id])
+    user_json = UserSerializer.new(@user).serialized_json
+    render json: user_json
+  end
+
   def create
     @user = User.new(user_params)
     if @user.save
