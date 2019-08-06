@@ -13,7 +13,7 @@ class Api::V1::MessagesController < ApplicationController
       render json: json_message, status: :created
     else
       resp = {
-        error: @message.errors.full_message
+        error: @message.errors.full_messages
       }
       render json: resp, status: :unprocessable_entity
     end
