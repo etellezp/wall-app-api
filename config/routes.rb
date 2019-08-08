@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   delete "/api/v1/logout", to: "api/v1/sessions#destroy"
   namespace :api do
     namespace :v1 do
-      resources :users, only: [:index, :show]
+      resources :users, only: [:index, :show] do
+        member do
+          get :confirm_email
+        end
+      end
       resources :messages, only: [:index, :create]
     end
   end

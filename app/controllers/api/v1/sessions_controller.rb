@@ -4,8 +4,14 @@ class Api::V1::SessionsController < ApplicationController
     @user = User.find_by(email: params[:user][:email])
 
     if @user && @user.authenticate(params[:user][:password])
-      session[:user_id] = @user.id
-      render json: UserSerializer.new(@user), status: :ok
+      if @user.email_confirmed
+        session[:user_id] = @user.id
+        render json: UserSerializer.new(@user), status: :ok
+      else
+        render json: {
+          error: "Please activate your account"
+        }
+      end
     else
       render json: {
         error: "Invalid Credentials"
