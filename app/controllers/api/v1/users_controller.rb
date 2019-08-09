@@ -1,11 +1,5 @@
 class Api::V1::UsersController < ApplicationController
 
-  def index
-    @users = User.all
-    json_users = UserSerializer.new(@users).serialized_json
-    render json: json_users, status: :ok
-  end
-
   def show
     @user = User.find(params[:id])
     user_json = UserSerializer.new(@user).serialized_json
@@ -32,7 +26,7 @@ class Api::V1::UsersController < ApplicationController
     if @user
       @user.email_activate
       resp = {
-        notice: "Welcome, your email is confirmed"
+        notice: "Welcome, your email is confirmed. Please go back to the app, refresh the page and add a message. Have a great day!"
       }
       render json: resp
     else
